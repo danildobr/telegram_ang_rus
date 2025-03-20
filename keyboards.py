@@ -7,18 +7,29 @@ class Comand:
     DELETE_WORD = 'Удалить слово ⛔'
     NEXT = 'Дальше ⏩'
 
-def create_main_keyboard():
+def create_main_keyboard(words):
+    """Создаем клавиатуру с вариантами ответов."""
     markup = types.ReplyKeyboardMarkup(row_width=2)
-    ru_word, en_word = random.choice(COMMON_WORDS)
-    buttons = [
-        types.KeyboardButton(en_word),
-        *[types.KeyboardButton(w[1]) for w in random.sample(COMMON_WORDS, 3)]
-    ]
+    if not words:
+        return markup, None, None
+    # Выбираем случайное целевое слово
+    target_word = random.choice(words)
+    ru_word, en_word = target_word
+    # Формируем список других вариантов
+    other_words = [word[1] for word in words if word[1] != en_word]
+    random.shuffle(other_words)
+    other_words = other_words[:3]  # Берем первые 3
+    # Создаем кнопки
+    buttons = [types.KeyboardButton(en_word)]
+    for word in other_words:
+        buttons.append(types.KeyboardButton(word))
     random.shuffle(buttons)
-    buttons.extend([
+    # Добавляем управляющие кнопки
+    buttons += [
         types.KeyboardButton(Comand.ADD_WORD),
         types.KeyboardButton(Comand.DELETE_WORD),
         types.KeyboardButton(Comand.NEXT)
-    ])
+    ]
     markup.add(*buttons)
     return markup, ru_word, en_word
+    
