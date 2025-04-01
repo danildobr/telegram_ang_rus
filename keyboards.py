@@ -1,11 +1,10 @@
 from telebot import types
-from config import COMMON_WORDS
 import random
 
 class Comand:
-    ADD_WORD = 'добавить слово ➕'
+    ADD_WORD = 'Добавить слово ➕'
     DELETE_WORD = 'Удалить слово ⛔'
-    NEXT = 'Дальше ⏩'
+    NEXT = 'Далее ⏩'
 
 def create_main_keyboard(words):
     """Создаем клавиатуру с вариантами ответов."""
